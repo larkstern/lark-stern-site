@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+::selection {
+  background: rgba(200, 119, 46, 0.22);
+  color: #1e3768;
+}
+
+@layer components {
+  /* light card surface */
+  .glass-panel {
+    @apply rounded-2xl border border-line bg-card shadow-card;
+  }
+
+  .kicker {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-cheetah;
+  }
+
+  /* faint navy measurement grid on the light canvas */
+  .grid-overlay {
+    background-image: linear-gradient(rgba(30, 55, 104, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 55, 104, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* cheetah-spot rosette texture, used sparingly behind sections */
+  .spot-field {
+    background-image: radial-gradient(
+        circle at center,
+        rgba(58, 42, 23, 0.06) 0%,
+        rgba(58, 42, 23, 0.06) 38%,
+        transparent 42%
+      ),
+      radial-gradient(
+        circle at center,
+        rgba(58, 42, 23, 0.05) 0%,
+        rgba(58, 42, 23, 0.05) 30%,
+        transparent 34%
+      );
+    background-size: 90px 90px, 130px 130px;
+    background-position: 0 0, 45px 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

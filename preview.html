@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lark &amp; Stern | Manufacturing Systems Excellence for Regulated Industries</title>
+<meta name="description" content="Lark & Stern delivers EBR/SiMPL, MES, SAP, and GAMP 5 validation for pharmaceutical and regulated industries — the speed and precision of a cheetah, the discipline of GxP." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --canvas: #FBFCFE;
+    --paper: #F2F5FA;
+    --card: #FFFFFF;
+    --line: rgba(30, 55, 104, 0.12);
+    --navy: #1E3768;
+    --steel: #56698E;
+    --mist: #8E9BB4;
+    --pale: #C7CDDA;
+    --ink: #27314A;
+    --gold: #B8901F;
+    --cheetah: #C8772E;
+    --cheetah-deep: #9C5A1E;
+    --cheetah-sand: #E7C9A0;
+    --shadow-card: 0 1px 2px rgba(30,55,104,0.04), 0 12px 32px -16px rgba(30,55,104,0.18);
+    --shadow-hover: 0 2px 4px rgba(30,55,104,0.06), 0 24px 48px -20px rgba(30,55,104,0.28);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(200, 119, 46, 0.22); color: var(--navy); }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .serif { font-family: "Playfair Display", Georgia, serif; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--cheetah);
+  }
+  h1, h2, h3 { color: var(--navy); letter-spacing: -0.02em; line-height: 1.06; }
+  .lead { color: var(--steel); }
+
+  .card {
+    border-radius: 16px; border: 1px solid var(--line);
+    background: var(--card); box-shadow: var(--shadow-card);
+    transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s, border-color .35s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: rgba(200,119,46,0.4); }
+
+  .btn-primary {
+    display: inline-block; border-radius: 999px; background: var(--navy);
+    color: #fff; font-weight: 600; font-size: 14px; padding: 12px 28px;
+    box-shadow: 0 12px 30px -10px rgba(30,55,104,0.6);
+    transition: transform .25s;
+  }
+  .btn-primary:hover { transform: scale(1.05); }
+  .btn-ghost {
+    display: inline-block; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--navy); font-weight: 500; font-size: 14px;
+    padding: 12px 28px; box-shadow: var(--shadow-card); transition: border-color .25s;
+  }
+  .btn-ghost:hover { border-color: rgba(200,119,46,0.5); }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    border-bottom: 1px solid var(--line);
+    background: rgba(251,252,254,0.8); backdrop-filter: blur(12px);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1180px; margin: 0 auto; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo .divider { width: 1px; height: 34px; background: rgba(58,61,66,0.25); }
+  .logo .word { font-family: "Playfair Display", serif; font-weight: 700; color: #383B40; font-size: 18px; letter-spacing: .06em; line-height: 1; }
+  .logo .sub { font-family: "Playfair Display", serif; font-size: 10px; letter-spacing: .34em; color: #5A5E66; margin-top: 4px; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a.link { font-size: 14px; color: var(--steel); transition: color .2s; }
+  .nav-links a.link:hover { color: var(--navy); }
+  .nav-cta { border-radius: 999px; background: var(--navy); color: #fff; font-weight: 600; font-size: 14px; padding: 7px 18px; transition: transform .25s; }
+  .nav-cta:hover { transform: scale(1.05); }
+  @media (max-width: 820px) { .nav-links { display: none; } }
+
+  /* ---------- Hero (full-bleed video, copy overlaid left) ---------- */
+  .hero { position: relative; overflow: hidden; background: var(--canvas); }
+  .hero-media { position: absolute; inset: 0; z-index: 0; }
+  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scaleX(-1); }
+  .grid-overlay { position: absolute; inset: 0; z-index: 1; opacity: .5;
+    background-image: linear-gradient(rgba(30,55,104,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(30,55,104,0.045) 1px, transparent 1px);
+    background-size: 56px 56px; animation: drift 18s ease-in-out infinite alternate; }
+  @keyframes drift { 0% { transform: translate3d(-1.5%, -1%, 0) scale(1); } 100% { transform: translate3d(1.5%, 1%, 0) scale(1.05); } }
+  /* one-sided wash: copy legible at left, cheetah crisp at right */
+  .hero-scrim { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to right, rgba(251,252,254,0.97) 0%, rgba(251,252,254,0.82) 40%, rgba(251,252,254,0) 66%); }
+  .hero-inner { position: relative; z-index: 3; max-width: 1180px; margin: 0 auto; padding: 112px 24px 64px; }
+  .hero-copy { max-width: 600px; }
+  .hero h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 600; }
+  .grad { background: linear-gradient(90deg, var(--cheetah-deep), var(--cheetah), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lead { margin: 28px 0 0; max-width: 540px; font-size: 18px; }
+  .hero-cta { margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .stats { margin-top: 52px; max-width: 560px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; box-shadow: var(--shadow-card); }
+  .stats .cell { background: rgba(255,255,255,0.85); padding: 16px 18px; backdrop-filter: blur(4px); }
+  .stats .num { font-family: "JetBrains Mono", monospace; font-size: 19px; color: var(--cheetah); }
+  .stats .lbl { font-size: 12px; color: var(--steel); margin-top: 4px; line-height: 1.35; }
+  @media (max-width: 760px) {
+    .hero-copy { max-width: 100%; }
+    .hero-scrim { background: linear-gradient(to bottom, rgba(251,252,254,0.94) 0%, rgba(251,252,254,0.55) 45%, rgba(251,252,254,0.32) 100%); }
+  }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+
+  /* ---------- Cheetah runner ---------- */
+  .runner-band { position: absolute; left: 0; right: 0; top: 60%; height: 170px; pointer-events: none; z-index: 1; }
+  .runner { position: absolute; top: 0; display: flex; align-items: center; animation: sprint 7s linear infinite; will-change: transform; }
+  @keyframes sprint { 0% { transform: translateX(-32vw); } 100% { transform: translateX(132vw); } }
+  .runner svg { width: 230px; height: auto; display: block; }
+  @media (min-width: 768px) { .runner svg { width: 290px; } }
+  .runner .ghost { position: absolute; top: 50%; transform: translateY(-50%); }
+  .cheetah-lead { color: rgba(156,90,30,0.72); }
+  .cheetah-t1 { color: rgba(200,119,46,0.40); right: 28px; filter: blur(1px); }
+  .cheetah-t2 { color: rgba(200,119,46,0.20); right: 84px; filter: blur(2px); }
+  .cheetah-t3 { color: rgba(200,119,46,0.10); right: 158px; filter: blur(3px); }
+
+  /* ---------- BioSphere molecular field ---------- */
+  #biosphere { overflow: hidden; }
+  #biosphere .mol { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .7; pointer-events: none; }
+  #biosphere .wrap { position: relative; z-index: 1; }
+
+  /* ---------- Sections ---------- */
+  section { position: relative; padding: 112px 0; }
+  .section-paper { background: var(--paper); }
+  .topline { position: absolute; left: 50%; top: 0; transform: translateX(-50%); height: 1px; width: 66%; }
+  .topline.steel { background: linear-gradient(90deg, transparent, rgba(86,105,142,0.4), transparent); }
+  .topline.cheetah { background: linear-gradient(90deg, transparent, rgba(200,119,46,0.3), transparent); }
+  .head-block { max-width: 760px; }
+  .head-block h2 { font-size: clamp(30px, 4.4vw, 50px); font-weight: 600; margin-top: 16px; }
+  .head-block p { margin-top: 20px; font-size: 18px; color: var(--steel); }
+
+  /* Solutions */
+  .sol-grid { margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 900px) { .sol-grid { grid-template-columns: 1fr; } }
+  .sol .row { display: flex; align-items: baseline; gap: 16px; }
+  .sol .idx { font-family: "JetBrains Mono", monospace; font-size: 14px; color: var(--cheetah); }
+  .sol h3 { font-size: 20px; font-weight: 600; }
+  .sol .body { margin-top: 16px; font-size: 14px; color: var(--steel); }
+  .sol dl { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 8px; }
+  .sol dl .pair { display: flex; gap: 12px; font-size: 12px; }
+  .sol dl dt { width: 84px; flex: none; font-family: "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .06em; color: var(--mist); }
+  .sol dl dd { color: var(--ink); }
+  .tags { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { border-radius: 999px; border: 1px solid var(--line); padding: 4px 12px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--steel); transition: color .3s, border-color .3s; }
+  .card:hover .tag { color: var(--cheetah); border-color: rgba(200,119,46,0.3); }
+  .sol { padding: 32px; }
+
+  /* Values */
+  .val-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .val-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .val-grid { grid-template-columns: 1fr; } }
+  .val { padding: 28px; }
+  .val h3 { font-size: 18px; font-weight: 600; }
+  .val h3 .slash { color: var(--cheetah); margin-right: 8px; }
+  .val .line { margin-top: 8px; font-size: 14px; font-weight: 500; color: rgba(30,55,104,0.8); }
+  .val .body { margin-top: 12px; font-size: 14px; color: var(--steel); }
+
+  /* BioSphere */
+  .bio-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 40px; align-items: start; }
+  @media (max-width: 980px) { .bio-grid { grid-template-columns: 1fr; } }
+  .bio-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 980px) { .bio-feats { grid-template-columns: repeat(3,1fr); } }
+  @media (max-width: 720px) { .bio-feats { grid-template-columns: 1fr; } }
+  .feat { padding: 24px; position: relative; overflow: hidden; }
+  .feat h3 { font-size: 16px; font-weight: 600; margin-top: 12px; }
+  .feat .body { margin-top: 12px; font-size: 14px; color: var(--steel); }
+  .bio-intro p.sub { margin-top: 16px; font-size: 14px; color: var(--mist); }
+
+  /* Story */
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } }
+  .story-body { margin-top: 24px; display: grid; gap: 16px; font-size: 16px; color: var(--steel); }
+  .clients { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .clients .c { background: var(--paper); padding: 16px 20px; font-size: 14px; font-weight: 500; color: var(--navy); }
+  .locs { margin-top: 24px; display: flex; gap: 32px; font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--steel); }
+  .story-card { padding: 32px; align-self: center; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); background: var(--canvas); }
+  .foot-inner { max-width: 1180px; margin: 0 auto; padding: 96px 24px; }
+  .foot-cta { text-align: center; }
+  .foot-cta h2 { font-size: clamp(30px, 4.4vw, 50px); font-weight: 600; margin: 16px auto 0; max-width: 720px; }
+  .foot-cta p { margin: 20px auto 0; max-width: 560px; font-size: 18px; color: var(--steel); }
+  .foot-cta .row { margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .foot-bottom { margin-top: 80px; border-top: 1px solid var(--line); padding-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .foot-meta { display: flex; gap: 32px; flex-wrap: wrap; font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--steel); }
+  .foot-meta a:hover { color: var(--cheetah); }
+  .copy { font-size: 12px; color: rgba(86,105,142,0.7); }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Mobile nav ---------- */
+  .nav-toggle { display:none; flex-direction:column; justify-content:center; gap:5px; width:40px; height:40px; padding:8px; background:transparent; border:0; cursor:pointer; }
+  .nav-toggle span { display:block; width:22px; height:2px; background:var(--navy); transition:transform .3s, opacity .3s; }
+  .nav-toggle.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display:none; flex-direction:column; padding:8px 24px 20px; border-top:1px solid var(--line); background:rgba(251,252,254,0.97); backdrop-filter:blur(12px); }
+  .mobile-menu a { padding:12px 2px; font-size:16px; color:var(--navy); border-bottom:1px solid var(--line); }
+  .mobile-menu a:last-child { border-bottom:0; }
+  .mobile-menu .m-cta { margin-top:12px; background:var(--navy); color:#fff; border-radius:999px; text-align:center; font-weight:600; }
+  .mobile-menu.open { display:flex; }
+  @media (max-width:820px){ .nav-toggle { display:flex; } }
+</style>
+</head>
+<body>
+
+<!-- reusable cheetah silhouette -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="cheetah" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M104 100 L44 170" stroke-width="13" fill="none" stroke="currentColor"/>
+      <path d="M126 102 L92 170" stroke-width="13" fill="none" stroke="currentColor"/>
+      <path d="M228 106 L300 170" stroke-width="13" fill="none" stroke="currentColor"/>
+      <path d="M210 106 L266 168" stroke-width="13" fill="none" stroke="currentColor"/>
+      <path d="M76 94 C42 90 17 74 8 38 C5 31 16 31 19 42 C29 72 50 86 78 84 Z" fill="currentColor"/>
+      <ellipse cx="158" cy="98" rx="88" ry="19" fill="currentColor"/>
+      <ellipse cx="100" cy="92" rx="40" ry="30" fill="currentColor"/>
+      <ellipse cx="226" cy="94" rx="34" ry="26" fill="currentColor"/>
+      <ellipse cx="257" cy="88" rx="28" ry="15" transform="rotate(-16 257 88)" fill="currentColor"/>
+      <circle cx="290" cy="79" r="13" fill="currentColor"/>
+      <ellipse cx="306" cy="85" rx="12" ry="7" fill="currentColor"/>
+      <circle cx="285" cy="67" r="4.5" fill="currentColor"/>
+      <circle cx="296" cy="68" r="4.5" fill="currentColor"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 64 64" width="36" height="36" fill="#1E3768" aria-hidden="true"><circle cx="32" cy="32" r="6.5"/><circle cx="49" cy="35.8" r="5"/><circle cx="39.6" cy="47.6" r="5"/><circle cx="24.5" cy="47.7" r="5"/><circle cx="15.1" cy="35.9" r="5"/><circle cx="18.4" cy="21.2" r="5"/><circle cx="31.9" cy="14.6" r="5"/><circle cx="45.6" cy="21.1" r="5"/><circle cx="57.1" cy="32" r="2.9"/><circle cx="54.6" cy="42.9" r="2.9"/><circle cx="47.7" cy="51.6" r="2.9"/><circle cx="37.6" cy="56.5" r="2.9"/><circle cx="26.4" cy="56.5" r="2.9"/><circle cx="16.3" cy="51.6" r="2.9"/><circle cx="9.4" cy="42.9" r="2.9"/><circle cx="6.9" cy="32" r="2.9"/><circle cx="9.4" cy="21.1" r="2.9"/><circle cx="16.3" cy="12.4" r="2.9"/><circle cx="26.4" cy="7.5" r="2.9"/><circle cx="37.6" cy="7.5" r="2.9"/><circle cx="47.7" cy="12.4" r="2.9"/><circle cx="54.6" cy="21.1" r="2.9"/></svg>
+      <span class="divider"></span>
+      <span><span class="word">LARK &amp; STERN</span><br/><span class="sub">CONSULTING INC.</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav-links">
+      <a class="link" href="#solutions">Solutions</a>
+      <a class="link" href="#values">Why Us</a>
+      <a class="link" href="#biosphere">BioSphere</a>
+      <a class="link" href="team.html">Team</a>
+      <a class="link" href="blog.html">Blog</a>
+      <a class="nav-cta" href="#contact">Book a demo</a>
+    </nav>
+  </div>
+  <div class="mobile-menu">
+    <a href="#solutions">Solutions</a>
+    <a href="#values">Why Us</a>
+    <a href="#biosphere">BioSphere</a>
+    <a href="team.html">Team</a>
+    <a href="blog.html">Blog</a>
+    <a class="m-cta" href="#contact">Book a demo</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-media">
+    <video class="hero-video" autoplay loop muted playsinline poster="cheetah-hero-poster.jpg" aria-hidden="true">
+      <source src="cheetah-hero.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="grid-overlay"></div>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="kicker">Enable &middot; Efficient &middot; Delivery</p>
+      <h1 style="margin-top:20px">Manufacturing systems excellence, <span class="grad">accelerated.</span></h1>
+      <p class="lead">Lark &amp; Stern delivers validated manufacturing systems for pharmaceutical and regulated industries — proven EBR, MES, SAP, and GAMP&nbsp;5 expertise, delivered with the speed, agility, and absolute precision of a cheetah.</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="#solutions">Explore our solutions</a>
+        <a class="btn-ghost" href="#contact">Book a demo</a>
+      </div>
+      <div class="stats">
+        <div class="cell"><div class="num">40–60%</div><div class="lbl">faster implementation than custom development</div></div>
+        <div class="cell"><div class="num">21 CFR 11</div><div class="lbl">&amp; EU Annex 11 — FDA/EMA compliant delivery</div></div>
+        <div class="cell"><div class="num">GxP</div><div class="lbl">pharma · biologics · cell &amp; gene · med-device</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="topline steel"></div>
+  <div class="wrap">
+    <div class="head-block reveal">
+      <p class="kicker">Our Solutions</p>
+      <h2>Bridging manufacturing operations and technology.</h2>
+      <p>We specialize in SAP-based manufacturing solutions for regulated industries — Electronic Batch Records, Manufacturing Execution Systems, and validated system integration. Our three-tiered approach — <strong style="color:var(--navy);font-weight:600">Business → Process → Technology</strong> — ensures digital transformation delivers measurable operational value, not just deployed software.</p>
+    </div>
+    <div class="sol-grid">
+      <div class="card sol reveal">
+        <div class="row"><span class="idx">01</span><h3>Electronic Batch Records (EBR)</h3></div>
+        <p class="body">Productized EBR delivery with SiMPL — an Electronic Batch Record accelerator built within SAP, implemented in partnership with Pangaea Solutions. Leverages your existing SAP infrastructure for faster time-to-value than custom development, now accelerated further by AI-assisted configuration and documentation.</p>
+        <dl>
+          <div class="pair"><dt>Benefits</dt><dd>50–70% faster batch review · 60–80% fewer documentation errors · FDA/EMA compliant</dd></div>
+          <div class="pair"><dt>Timeline</dt><dd>4–12 months</dd></div>
+          <div class="pair"><dt>Ideal for</dt><dd>Pharmaceutical, biologics, cell &amp; gene therapy, CMOs</dd></div>
+        </dl>
+        <div class="tags"><span class="tag">SiMPL</span><span class="tag">SAP-native</span><span class="tag">FDA / EMA</span></div>
+      </div>
+      <div class="card sol reveal">
+        <div class="row"><span class="idx">02</span><h3>Manufacturing Execution Systems (MES)</h3></div>
+        <p class="body">End-to-end MES implementation for pharmaceutical and regulated manufacturing environments — from initial requirements through validation and go-live support. Batch execution and scheduling, equipment integration, material tracking and genealogy, quality checks and analytics.</p>
+        <dl>
+          <div class="pair"><dt>Timeline</dt><dd>6–18 months</dd></div>
+          <div class="pair"><dt>Industries</dt><dd>Pharmaceutical, biologics, medical devices, specialty chemicals, regulated food &amp; beverage</dd></div>
+        </dl>
+        <div class="tags"><span class="tag">Batch execution</span><span class="tag">Genealogy</span><span class="tag">Quality analytics</span></div>
+      </div>
+      <div class="card sol reveal">
+        <div class="row"><span class="idx">03</span><h3>SAP Manufacturing &amp; Integration</h3></div>
+        <p class="body">Deep expertise in SAP manufacturing modules for regulated industries: PP and PP-PI implementation, QM for GxP compliance, MM for pharma supply chain, MES-to-ERP integration, and master data with full traceability. System-agnostic recommendations driven by your requirements — not vendor relationships.</p>
+        <dl>
+          <div class="pair"><dt>Timeline</dt><dd>Varies by scope</dd></div>
+          <div class="pair"><dt>Approach</dt><dd>Expert in SAP, objective by principle</dd></div>
+        </dl>
+        <div class="tags"><span class="tag">PP / PP-PI</span><span class="tag">QM · MM</span><span class="tag">MES ↔ ERP</span></div>
+      </div>
+      <div class="card sol reveal">
+        <div class="row"><span class="idx">04</span><h3>Validation &amp; Regulatory Compliance</h3></div>
+        <p class="body">GAMP 5 computer system validation and regulatory compliance ensuring your systems meet FDA, EMA, and global GxP requirements: CSV and validation documentation, risk assessments and traceability, data integrity (ALCOA+), 21 CFR Part 11 / EU Annex 11, and regulatory audit support — with AI-drafted, human-attested documentation through BioSphere.</p>
+        <dl>
+          <div class="pair"><dt>Timeline</dt><dd>3–9 months</dd></div>
+          <div class="pair"><dt>Principle</dt><dd>Compliance architected in from day one — never retrofitted</dd></div>
+        </dl>
+        <div class="tags"><span class="tag">GAMP 5</span><span class="tag">ALCOA+</span><span class="tag">Part 11 / Annex 11</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values" class="section-paper">
+  <div class="topline cheetah"></div>
+  <div class="wrap">
+    <div class="head-block reveal">
+      <p class="kicker">What Defines Us</p>
+      <h2>The instincts of a cheetah. The discipline of GxP.</h2>
+      <p>Speed without precision is just risk. Our values are the cheetah's — swift, agile, focused — held to the exacting standards of validated manufacturing.</p>
+    </div>
+    <div class="val-grid">
+      <div class="card val reveal"><h3><span class="slash">/</span>Speed</h3><p class="line">Swift delivery accelerating time-to-market</p><p class="body">Our productized SiMPL solution accelerates deployment by 40–60% versus custom development — validated and production-ready faster, without sacrificing quality or compliance.</p></div>
+      <div class="card val reveal"><h3><span class="slash">/</span>Agility</h3><p class="line">Flexibility adapting to changing requirements</p><p class="body">When requirements evolve mid-project, we pivot seamlessly while maintaining compliance. Our pharmaceutical experience means we anticipate changes and adjust without extending timelines.</p></div>
+      <div class="card val reveal"><h3><span class="slash">/</span>Focus</h3><p class="line">Unwavering commitment to client goals</p><p class="body">Systems built for actual production needs and regulatory requirements — not technical capabilities. That eliminates scope creep and delivers validated, audit-ready solutions.</p></div>
+      <div class="card val reveal"><h3><span class="slash">/</span>Efficiency</h3><p class="line">Streamlined processes, optimized resources</p><p class="body">Proven frameworks from pharmaceutical implementations avoid reinventing common solutions. Our accelerators reduce documentation time by 40–60% while maintaining compliance.</p></div>
+      <div class="card val reveal"><h3><span class="slash">/</span>Precision &amp; Excellence</h3><p class="line">Well-architected, reliable, validated systems</p><p class="body">GAMP 5 validated implementations that withstand FDA/EMA scrutiny. Validation and audit readiness are architected into foundations from day one — not afterward.</p></div>
+      <div class="card val reveal"><h3><span class="slash">/</span>Collaboration</h3><p class="line">Thriving independently or embedded in teams</p><p class="body">We work effectively with manufacturing, quality, IT, and validation teams — independent or embedded, creating unified efforts that drive successful outcomes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BIOSPHERE -->
+<section id="biosphere">
+  <canvas class="mol" id="mol-biosphere"></canvas>
+  <div class="topline cheetah"></div>
+  <div class="wrap">
+    <div class="bio-grid">
+      <div class="bio-intro reveal">
+        <p class="kicker">Our Platform</p>
+        <h2 style="font-size:clamp(30px,4.4vw,50px);font-weight:600;margin-top:16px">BioSphere<span style="color:var(--cheetah)">.</span></h2>
+        <p class="lead" style="margin-top:20px;font-size:18px">The project-aware, GxP-compliant documentation platform we built for our own programmes — purpose-built for digital transformation in pharmaceutical, biotech, medical device, and regulated manufacturing. Methodology-agnostic Blueprints structure every workspace around its canonical deliverables.</p>
+        <p class="sub">Every deliverable structured. Every signature compliant. Every change on the record.</p>
+        <a class="btn-primary" style="margin-top:28px" href="#contact">See BioSphere live →</a>
+      </div>
+      <div class="bio-feats">
+        <div class="card feat reveal"><p class="kicker">Compliance</p><h3>Part 11 signatures, built in</h3><p class="body">A controlled document workflow with 21 CFR Part 11 / EU Annex 11–compliant electronic signatures. Review, approve, and release without leaving the validated environment.</p></div>
+        <div class="card feat reveal"><p class="kicker">Traceability</p><h3>A record that survives inspection</h3><p class="body">Issues, risks, and requirements traced end-to-end in a tamper-evident audit trail engineered for regulatory inspection. When the auditor asks, the answer is already there.</p></div>
+        <div class="card feat reveal"><p class="kicker">AI-assisted drafting</p><h3>First drafts in minutes — humans attest</h3><p class="body">An AI draft-generation assistant produces validation deliverables from your branded templates, grounded in the project's structured context. Every AI draft requires an explicit human Authorship Attestation before it moves forward.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="topline steel"></div>
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="reveal">
+        <p class="kicker">Our Story</p>
+        <h2 style="font-size:clamp(30px,4.4vw,50px);font-weight:600;margin-top:16px">Founded for GxP. Built for what's next.</h2>
+        <div class="story-body">
+          <p>Founded in 2021 in Vancouver, Canada, Lark &amp; Stern specializes in manufacturing systems implementation for pharmaceutical and regulated industries — tailored solutions for the unique challenges of GxP manufacturing environments.</p>
+          <p>Our strategic partnership with Pangaea Solutions positions us as a premier implementer of SiMPL, their Electronic Batch Record accelerator built within SAP — faster implementations with lower risk than custom development.</p>
+          <p>From our Canadian headquarters we serve pharmaceutical leaders worldwide, while our South African delivery center provides world-class consulting with strategic timezone coverage for European and North American clients. Today, we're extending that delivery record with AI — and with BioSphere, our GxP-compliant documentation platform.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card story-card">
+          <p class="kicker">Trusted by Industry Leaders</p>
+          <p class="body" style="margin-top:16px;font-size:14px;color:var(--steel)">From innovative biotechnology companies to global pharmaceutical manufacturers — united by their commitment to quality, compliance, and operational excellence.</p>
+          <div class="clients">
+            <div class="c">AstraZeneca</div><div class="c">Bristol Myers Squibb</div>
+            <div class="c">Thermo Fisher Scientific</div><div class="c">STEMCELL Technologies</div>
+            <div class="c">Pangaea Solutions</div><div class="c">UST</div>
+            <div class="c">iSSi</div><div class="c">Endeavor</div>
+          </div>
+          <div class="locs"><span>HQ — Vancouver, Canada</span><span>Delivery — Pretoria, South Africa</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="foot-inner">
+    <div class="foot-cta reveal">
+      <p class="kicker">Begin</p>
+      <h2>Your transformation, validated.</h2>
+      <p>Talk to the team about your programme — or see BioSphere live on a workspace built around your methodology.</p>
+      <div class="row">
+        <a class="btn-primary" href="mailto:hello@lark-stern.com?subject=Demo%20Request">Book a demo</a>
+        <a class="btn-ghost" href="mailto:hello@lark-stern.com">Contact us</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" width="40" height="40" fill="#1E3768" aria-hidden="true">
+          <circle cx="32" cy="32" r="6.5"/><circle cx="49" cy="35.8" r="5"/><circle cx="39.6" cy="47.6" r="5"/><circle cx="24.5" cy="47.7" r="5"/><circle cx="15.1" cy="35.9" r="5"/><circle cx="18.4" cy="21.2" r="5"/><circle cx="31.9" cy="14.6" r="5"/><circle cx="45.6" cy="21.1" r="5"/><circle cx="57.1" cy="32" r="2.9"/><circle cx="54.6" cy="42.9" r="2.9"/><circle cx="47.7" cy="51.6" r="2.9"/><circle cx="37.6" cy="56.5" r="2.9"/><circle cx="26.4" cy="56.5" r="2.9"/><circle cx="16.3" cy="51.6" r="2.9"/><circle cx="9.4" cy="42.9" r="2.9"/><circle cx="6.9" cy="32" r="2.9"/><circle cx="9.4" cy="21.1" r="2.9"/><circle cx="16.3" cy="12.4" r="2.9"/><circle cx="26.4" cy="7.5" r="2.9"/><circle cx="37.6" cy="7.5" r="2.9"/><circle cx="47.7" cy="12.4" r="2.9"/><circle cx="54.6" cy="21.1" r="2.9"/>
+        </svg>
+        <span class="divider"></span>
+        <span><span class="word">LARK &amp; STERN</span><br/><span class="sub">CONSULTING INC.</span></span>
+      </div>
+      <div class="foot-meta">
+        <span>Vancouver, Canada</span>
+        <span>Pretoria, South Africa</span>
+        <a href="https://www.linkedin.com/company/lark-stern-consulting-inc/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
+      <p class="copy">© <span id="yr"></span> Lark &amp; Stern</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  // reduced-motion: pause the hero video on its poster frame
+  var hv = document.querySelector(".hero-video");
+  if (hv && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { try { hv.pause(); } catch (e) {} }
+
+  // reveal sections on scroll
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+  // ambient molecular / cellular network behind BioSphere
+  (function () {
+    var canvas = document.getElementById("mol-biosphere"); if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var w=0,h=0,dpr=1,nodes=[],pulses=[],raf=0,last=performance.now(),LINK=150;
+    function seed(){ var c=Math.min(90,Math.floor((w*h)/20000)); nodes=[]; for(var i=0;i<c;i++) nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.42,vy:(Math.random()-0.5)*0.42,r:1.4+Math.random()*2.2,phase:Math.random()*Math.PI*2}); pulses=[]; }
+    function resize(){ dpr=Math.min(window.devicePixelRatio||1,2); w=canvas.clientWidth; h=canvas.clientHeight; canvas.width=w*dpr; canvas.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); seed(); }
+    function spawn(){ if(nodes.length<2||pulses.length>18) return; var from=Math.floor(Math.random()*nodes.length),best=-1,bd=Infinity; for(var i=0;i<nodes.length;i++){ if(i===from)continue; var dx=nodes[i].x-nodes[from].x,dy=nodes[i].y-nodes[from].y,d=dx*dx+dy*dy; if(d<bd&&d<LINK*LINK){bd=d;best=i;} } if(best>=0) pulses.push({from:from,to:best,t:0,speed:0.018+Math.random()*0.03}); }
+    function frame(now){ var dt=Math.min((now-last)/16.67,3); last=now; ctx.clearRect(0,0,w,h); var i,j,n;
+      for(i=0;i<nodes.length;i++){ n=nodes[i]; n.x+=n.vx*dt; n.y+=n.vy*dt; n.phase+=0.018*dt; if(n.x<-20)n.x=w+20; if(n.x>w+20)n.x=-20; if(n.y<-20)n.y=h+20; if(n.y>h+20)n.y=-20; }
+      for(i=0;i<nodes.length;i++) for(j=i+1;j<nodes.length;j++){ var dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d2=dx*dx+dy*dy; if(d2<LINK*LINK){ var a=(1-Math.sqrt(d2)/LINK)*0.16; ctx.strokeStyle="rgba(86,105,142,"+a+")"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); } }
+      for(i=0;i<nodes.length;i++){ n=nodes[i]; var g=0.5+Math.sin(n.phase)*0.3; ctx.fillStyle="rgba(30,55,104,"+(0.18+g*0.22)+")"; ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fill(); }
+      if(Math.random()<0.25*dt) spawn();
+      pulses=pulses.filter(function(p){return p.t<=1;});
+      for(i=0;i<pulses.length;i++){ var p=pulses[i]; p.t+=p.speed*dt; var A=nodes[p.from],B=nodes[p.to]; if(!A||!B)continue; var x=A.x+(B.x-A.x)*p.t,y=A.y+(B.y-A.y)*p.t; ctx.fillStyle="rgba(200,119,46,0.85)"; ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fill(); }
+      raf=requestAnimationFrame(frame);
+    }
+    resize(); window.addEventListener("resize",resize);
+    if(reduced){ frame(performance.now()); cancelAnimationFrame(raf); } else { raf=requestAnimationFrame(frame); }
+  })();
+
+  (function(){
+    var t=document.querySelector(".nav-toggle"), m=document.querySelector(".mobile-menu");
+    if(!t||!m) return;
+    t.addEventListener("click",function(){ var o=!m.classList.contains("open"); m.classList.toggle("open",o); t.classList.toggle("open",o); t.setAttribute("aria-expanded",o?"true":"false"); });
+    m.querySelectorAll("a").forEach(function(a){ a.addEventListener("click",function(){ m.classList.remove("open"); t.classList.remove("open"); t.setAttribute("aria-expanded","false"); }); });
+  })();
+</script>
+</body>
+</html>
