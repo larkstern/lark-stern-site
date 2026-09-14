@@ -80,11 +80,38 @@ Every future `git push` to `main` auto-deploys.
 
 ---
 
+---
+
+## Letting colleagues publish (Google Docs)
+
+Colleagues write posts in Google Docs and an hourly automation puts them on the site -
+no GitHub, no Markdown, no new logins. The one-time setup (a Google service account and
+two GitHub secrets) is in **[SETUP-google-docs.md](SETUP-google-docs.md)**. The public
+site works with or without this configured; it only controls the Docs-to-site sync.
+
+---
+
+## Before you cancel the Wix plan
+
+- **Find out what posts your blog to LinkedIn.** Wix has no built-in auto-share, so
+  something external is doing it: check Wix → *Apps → Installed Apps*, any Zapier/Make
+  account, and the small "via …" line under a recent auto-post on the LinkedIn Page.
+  If it reads the RSS feed, repoint it at `https://www.lark-stern.com/blog-feed.xml` -
+  the new site serves that same path, so it should keep working.
+- **Keep the Wix site published for ~30 days** after DNS moves, as a rollback.
+- `scripts/verify-migration.mjs` compares every post against the live Wix pages. Once Wix
+  is gone, so is that reference - run it before you cancel if you want a final check.
+
+---
+
 ## Notes
-- `preview.html`, `team.html`, `blog.html` are standalone design mirrors for local sign-off. The deployed
-  **app** uses the React routes (`/`, `/team`, `/blog`) — those static files aren't served by Next and can
-  be left in the repo or removed; they don't affect the build.
+- The blog is fully migrated: all 19 posts live in `content/blog/` and render at
+  `/post/<slug>`, the same URLs Wix used. `vercel.json` also redirects `/blog/<slug>`
+  to `/post/<slug>` for any stray links.
+- `preview.html` and `team.html` are standalone design mirrors for local sign-off; they
+  aren't served by Next and don't affect the build. `blog.html` predates the migration
+  and no longer matches the real blog.
 - The hero video and poster live in `public/` and are served automatically at `/cheetah-hero.mp4` and
-  `/cheetah-hero-poster.jpg`.
+  `/cheetah-hero-poster.jpg`. Post media lives under `public/blog/<slug>/`.
 - To later move email or the whole domain off Wix entirely, do that separately and deliberately — it's not
   required to launch the site on Vercel.

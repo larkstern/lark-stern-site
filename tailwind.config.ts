@@ -1,7 +1,11 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./content/**/*.{md,mdx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -58,9 +62,29 @@ const config: Config = {
           "100%": { transform: "translateX(130vw)" },
         },
       },
+      typography: {
+        lark: {
+          css: {
+            "--tw-prose-body": "#27314A", // ink
+            "--tw-prose-headings": "#1E3768", // navy
+            "--tw-prose-lead": "#56698E", // steel
+            "--tw-prose-links": "#9C5A1E", // cheetah-deep, readable on white
+            "--tw-prose-bold": "#1E3768",
+            "--tw-prose-counters": "#8E9BB4", // mist
+            "--tw-prose-bullets": "#C7CDDA", // pale
+            "--tw-prose-hr": "rgba(30, 55, 104, 0.12)", // line
+            "--tw-prose-quotes": "#1E3768",
+            "--tw-prose-quote-borders": "#C8772E", // cheetah
+            "--tw-prose-captions": "#8E9BB4",
+            "--tw-prose-th-borders": "rgba(30, 55, 104, 0.12)",
+            "--tw-prose-td-borders": "rgba(30, 55, 104, 0.12)",
+            maxWidth: "none",
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 
 export default config;

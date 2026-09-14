@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { getAllPosts, getCategories, formatDate } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "Lark & Stern | Blog",
@@ -8,39 +9,29 @@ export const metadata: Metadata = {
     "News, Lunch & Learn recaps, and team growth from the Lark & Stern team.",
 };
 
-const categories = ["All Posts", "Lunch & Learn", "Team Growth"];
+const ALL = "All Posts";
 
-const posts = [
-  {
-    title: "The Riddle Board: Where Every Week Brings a New Mystery",
-    date: "Jun 12",
-    read: "2 min read",
-    category: "Team Growth",
-    excerpt:
-      "To celebrate this ongoing tradition, we asked everyone to share some of their favourite riddles from the board. A weekly mystery that keeps the team thinking, laughing, and connecting.",
-    href: "https://www.lark-stern.com/post/the-riddle-board-where-every-week-brings-a-new-mystery",
-  },
-  {
-    title: "SAPHEX 2026: Connection, Innovation & Impact",
-    date: "Jun 2",
-    read: "2 min read",
-    category: "Team Growth",
-    excerpt:
-      "The recent SAPHEX Expo, held on 25 & 26 March 2026 at the Sandton Convention Centre, again proved why it remains a standout event in the pharmaceutical calendar — meaningful engagement, industry insights, and valuable connections.",
-    href: "https://www.lark-stern.com/post/saphex-2026-connection-innovation-impact",
-  },
-  {
-    title: "Lunch & Learn Recap: Mastering New Skills Blazingly Fast",
-    date: "Apr 2",
-    read: "2 min read",
-    category: "Lunch & Learn",
-    excerpt:
-      "At our latest Lunch & Learn, presented by Ethan Vletter, we unpacked what it really takes to learn new skills quickly. The key takeaway? It's not about working harder — it's about working smarter by focusing on the system behind the skill.",
-    href: "https://www.lark-stern.com/post/lunch-learn-recap-mastering-new-skills-blazingly-fast",
-  },
-];
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: { category?: string; tag?: string };
+}) {
+  const posts = await getAllPosts();
+  const categories = [ALL, ...(await getCategories(posts))];
 
-export default function BlogPage() {
+  const active =
+    searchParams.category && categories.includes(searchParams.category)
+      ? searchParams.category
+      : ALL;
+
+  const activeTag = searchParams.tag;
+
+  const visible = activeTag
+    ? posts.filter((p) => p.hashtags?.includes(activeTag))
+    : active === ALL
+      ? posts
+      : posts.filter((p) => p.category === active);
+
   return (
     <main className="relative bg-canvas">
       <Nav />
@@ -55,52 +46,78 @@ export default function BlogPage() {
             News, Lunch &amp; Learn recaps, and life inside Lark &amp; Stern.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {categories.map((c, i) => (
-              <span
-                key={c}
-                className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                  i === 0
-                    ? "border-navy bg-navy text-white"
-                    : "border-line text-steel hover:border-cheetah/40 hover:text-navy"
-                }`}
-              >
-                {c}
+          {activeTag ? (
+            <div className="mt-8 flex items-center gap-2 font-mono text-sm text-steel">
+              <span>
+                Tagged <span className="text-navy">#{activeTag}</span>
               </span>
-            ))}
+              <a href="/blog" className="text-cheetah underline underline-offset-2">
+                clear
+              </a>
+            </div>
+          ) : (
+          <div className="mt-8 flex flex-wrap gap-2">
+            {categories.map((category) => {
+              const isActive = category === active;
+              const href = category === ALL ? "/blog" : `/blog?category=${encodeURIComponent(category)}`;
+              return (
+                <a
+                  key={category}
+                  href={href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+                    isActive
+                      ? "border-navy bg-navy text-white"
+                      : "border-line text-steel hover:border-cheetah/40 hover:text-navy"
+                  }`}
+                >
+                  {category}
+                </a>
+              );
+            })}
           </div>
+          )}
         </div>
       </section>
 
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            {posts.map((p) => (
+            {visible.map((post) => (
               <a
-                key={p.title}
-                href={p.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                key={post.slug}
+                href={`/post/${post.slug}`}
                 className="glass-panel group flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:border-cheetah/40 hover:shadow-cardHover"
               >
-                {/* themed cover band */}
                 <div className="relative h-36 overflow-hidden bg-gradient-to-br from-navy via-steel to-cheetah-deep">
-                  <div className="spot-field absolute inset-0 opacity-30" />
-                  <span className="absolute bottom-3 left-4 rounded-full bg-white/90 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-navy">
-                    {p.category}
-                  </span>
+                  {post.coverImage ? (
+                    <img
+                      src={post.coverImage}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="spot-field absolute inset-0 opacity-30" />
+                  )}
+                  {post.category ? (
+                    <span className="absolute bottom-3 left-4 rounded-full bg-white/90 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-navy">
+                      {post.category}
+                    </span>
+                  ) : null}
                 </div>
+
                 <div className="flex flex-1 flex-col p-6">
                   <h2 className="text-lg font-semibold leading-snug text-navy">
-                    {p.title}
+                    {post.title}
                   </h2>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">
-                    {p.excerpt}
+                  <p className="mt-3 line-clamp-4 flex-1 text-sm leading-relaxed text-steel">
+                    {post.excerpt}
                   </p>
                   <div className="mt-5 flex items-center justify-between border-t border-line pt-4 font-mono text-xs text-mist">
-                    <span>Lark &amp; Stern</span>
+                    <span>{post.author}</span>
                     <span>
-                      {p.date} · {p.read}
+                      {formatDate(post.publishedAt)} · {post.timeToRead} min read
                     </span>
                   </div>
                 </div>
@@ -108,10 +125,9 @@ export default function BlogPage() {
             ))}
           </div>
 
-          <p className="mt-10 text-sm text-mist">
-            Posts currently link to the live articles. When you&apos;re ready, we can
-            migrate full post content into the app.
-          </p>
+          {!visible.length ? (
+            <p className="mt-10 text-sm text-mist">Nothing here yet.</p>
+          ) : null}
         </div>
       </section>
 

@@ -1,0 +1,50 @@
+name: Sync blog from Google Docs
+
+# Runs hourly, and can be triggered by hand from the Actions tab. It pulls any
+# "Publish: Yes" docs from the Drive folder into the repo and commits them; the
+# commit triggers Vercel's normal deploy. Nobody has to run anything.
+
+on:
+  schedule:
+    - cron: "0 * * * *" # top of every hour (UTC)
+  workflow_dispatch: {} # a manual "Run workflow" button
+
+# Let the job push the commit it creates.
+permissions:
+  contents: write
+
+# Never let two syncs run at once.
+concurrency:
+  group: sync-blog
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Pull posts from Google Docs
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+        run: node scripts/sync-google-docs.mjs
+
+      - name: Commit any changes
+        run: |
+          git config user.name "blog-sync"
+          git config user.email "blog-sync@users.noreply.github.com"
+          if [ -n "$(git status --porcelain content public/blog)" ]; then
+            git add content public/blog
+            git commit -m "Sync blog posts from Google Docs"
+            git push
+          else
+            echo "No changes."
+          fi
