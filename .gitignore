@@ -4,3 +4,7 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# local env (Keystatic GitHub App credentials land here)
+.env
+.env*.local
