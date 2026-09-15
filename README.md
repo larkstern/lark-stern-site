@@ -37,26 +37,20 @@ public/blog/<slug>/               that post's images and video
 
 ### Writing a post
 
-Posts are written in **Google Docs** and pulled into the site automatically -
-colleagues need no GitHub, Markdown, or logins beyond Google. They copy a template
-doc, write, and set "Publish: Yes"; an hourly GitHub Action converts it to MDX and
-commits it. Full setup and the colleague-facing instructions are in
-[SETUP-google-docs.md](SETUP-google-docs.md).
-
-To add a post yourself by hand, just create `content/blog/<slug>/index.mdx` with
-the same frontmatter as an existing post, and push.
+There is no authoring UI right now - to add a post by hand, create
+`content/blog/<slug>/index.mdx` with the same frontmatter as an existing post,
+and push.
 
 ### Scripts
 
 ```bash
-npm run sync-blog                  # pull published Google Docs into the repo
 node scripts/migrate-wix.mjs       # (one-time) re-run the Wix import from the saved export
 node scripts/verify-migration.mjs  # (one-time) diff every post against the live Wix page
 ```
 
 `scripts/_wix-export.json` is the raw Wix export - the safety net if anything needs
 re-converting after Wix is gone. `verify-migration.mjs` only works while the Wix
-site is still up. The Google Docs converter lives in `scripts/lib/gdoc-to-mdx.mjs`.
+site is still up.
 
 ## Structure
 

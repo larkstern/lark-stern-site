@@ -80,17 +80,6 @@ Every future `git push` to `main` auto-deploys.
 
 ---
 
----
-
-## Letting colleagues publish (Google Docs)
-
-Colleagues write posts in Google Docs and an hourly automation puts them on the site -
-no GitHub, no Markdown, no new logins. The one-time setup (a Google service account and
-two GitHub secrets) is in **[SETUP-google-docs.md](SETUP-google-docs.md)**. The public
-site works with or without this configured; it only controls the Docs-to-site sync.
-
----
-
 ## Before you cancel the Wix plan
 
 - **Find out what posts your blog to LinkedIn.** Wix has no built-in auto-share, so
