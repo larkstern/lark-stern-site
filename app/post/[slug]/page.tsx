@@ -105,7 +105,7 @@ export default async function PostPage({
         ) : null}
 
         <div className="mx-auto max-w-3xl px-6 py-12">
-          <div className="prose prose-lark max-w-none">
+          <div className="prose prose-lark max-w-none flow-root">
             <MDXRemote
               source={post.body}
               components={postComponents}

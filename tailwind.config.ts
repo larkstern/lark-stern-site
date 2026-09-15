@@ -79,6 +79,13 @@ const config: Config = {
             "--tw-prose-th-borders": "rgba(30, 55, 104, 0.12)",
             "--tw-prose-td-borders": "rgba(30, 55, 104, 0.12)",
             maxWidth: "none",
+            // A heading always starts below any earlier floated image (e.g. a
+            // team member's photo), never beside its leftover tail - keeps
+            // each person's name/photo/facts grouped and never overlapping.
+            "h2, h3, h4": { clear: "both" },
+            // The tag-links line is always the last paragraph in a post -
+            // clear it too, so it never wraps beside a trailing floated image.
+            "p:last-child": { clear: "both" },
           },
         },
       },
