@@ -11,11 +11,19 @@ type FigureProps = {
   src: string;
   alt?: string;
   caption?: string;
+  /** Wix had this image set to sit beside text (image left, text wraps right). */
+  wrap?: boolean;
 };
 
-export function Figure({ src, alt = "", caption }: FigureProps) {
+export function Figure({ src, alt = "", caption, wrap = false }: FigureProps) {
   return (
-    <figure className="not-prose my-8">
+    <figure
+      className={
+        wrap
+          ? "not-prose float-left clear-left mb-4 mr-6 w-1/2 min-w-[220px] max-w-[340px]"
+          : "not-prose clear-both my-8"
+      }
+    >
       <img
         src={src}
         alt={alt}
