@@ -16,14 +16,50 @@ npm run build    # production build
 ## Quick preview (no install)
 
 Open `preview.html` directly in a browser — a dependency-free mirror of the home page
-(full-bleed cheetah video hero + BioSphere molecular field). `team.html` and `blog.html`
-mirror the Team and Blog routes and cross-link via the nav, for design sign-off.
+(full-bleed cheetah video hero + BioSphere molecular field). `team.html` mirrors the Team
+route for design sign-off. (`blog.html` predates the migration and no longer reflects the
+real blog - the live routes do.)
+
+## Blog
+
+All 19 posts were migrated off Wix and live in this repo as MDX. There is no CMS
+server and no database - a post is a text file.
+
+```
+content/blog/<slug>/index.mdx     frontmatter + body
+public/blog/<slug>/               that post's images and video
+```
+
+- Posts render at `/post/<slug>` - the same URLs Wix published, so existing links
+  and LinkedIn shares keep working. Do not change a published slug.
+- `/blog` is the index, with working category filters.
+- `/blog-feed.xml` is the RSS feed, served at the same path Wix used.
+
+### Writing a post
+
+There is no authoring UI right now - to add a post by hand, create
+`content/blog/<slug>/index.mdx` with the same frontmatter as an existing post,
+and push.
+
+### Scripts
+
+```bash
+node scripts/migrate-wix.mjs       # (one-time) re-run the Wix import from the saved export
+node scripts/verify-migration.mjs  # (one-time) diff every post against the live Wix page
+```
+
+`scripts/_wix-export.json` is the raw Wix export - the safety net if anything needs
+re-converting after Wix is gone. `verify-migration.mjs` only works while the Wix
+site is still up.
 
 ## Structure
 
 - `app/page.tsx` — home composition (Hero → Solutions → Values → BioSphere → Story → Footer)
 - `app/team/page.tsx` — Team page (route `/team`)
-- `app/blog/page.tsx` — Blog page (route `/blog`)
+- `app/blog/page.tsx` - blog index, reads `content/blog/`
+- `app/post/[slug]/page.tsx` - individual post
+- `lib/posts.ts` - the only thing that reads post files
+- `components/PostMedia.tsx` - `<Figure>`, `<Gallery>`, `<PostVideo>` used inside posts
 - `app/layout.tsx` — fonts (Inter / JetBrains Mono / Playfair), metadata, light theme
 - `components/MoleculeField.tsx` — ambient molecular/cellular network behind BioSphere
 - `components/CheetahField.tsx` — ambient canvas animation: kinetic speed lines + drifting cheetah-spot rosettes
