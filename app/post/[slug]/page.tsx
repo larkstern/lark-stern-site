@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
+import { PortableText } from "@portabletext/react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { postComponents } from "@/components/PostMedia";
@@ -24,9 +23,8 @@ export async function generateMetadata({
   if (!post) return { title: "Lark & Stern | Post not found" };
 
   const url = `https://www.lark-stern.com/post/${post.slug}`;
-  const image = post.coverImage
-    ? `https://www.lark-stern.com${post.coverImage}`
-    : undefined;
+  // post.coverImage is already an absolute Sanity CDN URL - do not prefix it.
+  const image = post.coverImage;
 
   return {
     title: `${post.title} | Lark & Stern`,
@@ -64,15 +62,6 @@ export default async function PostPage({
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3);
 
-  // A few Wix authors used the cover photo as the article's own opening image
-  // too. If the body's very first figure is that same photo, skip the
-  // separate hero rather than showing it twice.
-  const firstFigure = post.body.match(/<Figure\b([\s\S]*?)\/>/);
-  const duplicatesCover =
-    !!post.coverImage &&
-    !!firstFigure &&
-    firstFigure[1].includes(`src="${post.coverImage}"`);
-
   return (
     <main className="relative bg-canvas">
       <Nav />
@@ -94,7 +83,7 @@ export default async function PostPage({
           </div>
         </header>
 
-        {post.coverImage && !duplicatesCover ? (
+        {post.coverImage ? (
           <div className="mx-auto mt-10 max-w-4xl px-6">
             <img
               src={post.coverImage}
@@ -106,11 +95,7 @@ export default async function PostPage({
 
         <div className="mx-auto max-w-3xl px-6 py-12">
           <div className="prose prose-lark max-w-none flow-root">
-            <MDXRemote
-              source={post.body}
-              components={postComponents}
-              options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
-            />
+            <PortableText value={post.body as any} components={postComponents} />
           </div>
         </div>
       </article>

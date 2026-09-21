@@ -14,7 +14,8 @@ export async function GET() {
   const items = posts
     .map((post) => {
       const url = `${SITE}/post/${post.slug}`;
-      const cover = post.coverImage ? `${SITE}${post.coverImage}` : null;
+      // post.coverImage is already an absolute Sanity CDN URL.
+      const cover = post.coverImage ?? null;
       return [
         "<item>",
         `<title>${cdata(post.title)}</title>`,
