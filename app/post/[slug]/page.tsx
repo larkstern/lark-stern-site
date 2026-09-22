@@ -6,6 +6,12 @@ import Footer from "@/components/Footer";
 import { postComponents } from "@/components/PostMedia";
 import { getPost, getPostSlugs, getAllPosts, formatDate } from "@/lib/posts";
 
+// Without this, Next's Data Cache holds the first getPost()/getAllPosts()
+// result indefinitely - an edit made in /studio would never appear until
+// the next deploy. 60s keeps the page fast while still catching up shortly
+// after a publish.
+export const revalidate = 60;
+
 // The route lives at /post/<slug> to match the URLs the Wix site published -
 // every existing LinkedIn share and inbound link points there.
 

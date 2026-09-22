@@ -1,5 +1,9 @@
 import { getAllPosts, toDate } from "@/lib/posts";
 
+// Without this, Next's Data Cache holds the first getAllPosts() result
+// indefinitely - see app/blog/page.tsx for the same issue.
+export const revalidate = 60;
+
 // Served at /blog-feed.xml - the exact path the Wix site used, so anything
 // subscribed to the old feed keeps working across the cutover.
 
