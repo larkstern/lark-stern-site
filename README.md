@@ -22,35 +22,53 @@ real blog - the live routes do.)
 
 ## Blog
 
-All 19 posts were migrated off Wix and live in this repo as MDX. There is no CMS
-server and no database - a post is a text file.
-
-```
-content/blog/<slug>/index.mdx     frontmatter + body
-public/blog/<slug>/               that post's images and video
-```
+Posts are authored in Sanity (a hosted CMS) and read at build/request time via
+`lib/posts.ts` -> `lib/sanity/queries.ts`. There is no local content file for a
+post - `content/blog/` and `public/blog/` are the pre-migration Wix export, kept
+only until the Sanity migration is verified (see below).
 
 - Posts render at `/post/<slug>` - the same URLs Wix published, so existing links
-  and LinkedIn shares keep working. Do not change a published slug.
+  and LinkedIn shares keep working. Do not change a published slug (the slug
+  field in Sanity).
 - `/blog` is the index, with working category filters.
 - `/blog-feed.xml` is the RSS feed, served at the same path Wix used.
 
 ### Writing a post
 
-There is no authoring UI right now - to add a post by hand, create
-`content/blog/<slug>/index.mdx` with the same frontmatter as an existing post,
-and push.
+Go to `/studio` on the live site (or `localhost:3000/studio` locally) and sign
+in with Sanity. No GitHub, no Markdown. Fields: Title, Category, Author, Cover
+image, Excerpt, Body (rich text - headings, bold/italic, lists, links, images,
+plus Figure/Gallery/Video blocks for the same layouts the old MDX posts used).
+A document only appears on the live site once published (Sanity's own
+draft/publish state).
+
+Who can access `/studio` is managed in the Sanity project's dashboard
+(Members -> Invite) - reaching the URL grants nothing by itself; publishing
+requires being an invited project member.
+
+### Sanity project setup
+
+- Provisioned via Vercel -> Project -> Integrations -> Sanity, which sets
+  `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` in the Vercel
+  project automatically. For local dev, copy `.env.local.example` to
+  `.env.local` and fill in the same project id.
+- Two datasets: `production` (live site) and `development` (local testing -
+  create this one by hand in the Sanity dashboard, the integration only
+  creates `production`).
+- Schema: `sanity/schemaTypes/post.ts`.
 
 ### Scripts
 
 ```bash
-node scripts/migrate-wix.mjs       # (one-time) re-run the Wix import from the saved export
-node scripts/verify-migration.mjs  # (one-time) diff every post against the live Wix page
+node scripts/migrate-wix.mjs        # (one-time, historical) the original Wix import
+node scripts/verify-migration.mjs   # (one-time, historical) diff against the live Wix page
+node scripts/migrate-to-sanity.mjs --dataset=development   # move content/blog/* into Sanity
 ```
 
-`scripts/_wix-export.json` is the raw Wix export - the safety net if anything needs
-re-converting after Wix is gone. `verify-migration.mjs` only works while the Wix
-site is still up.
+`migrate-to-sanity.mjs` needs `SANITY_API_TOKEN` (write access - see
+`.env.local.example`). It's a best-effort MDX-to-rich-text converter; spot-check
+every migrated post against its live page before deleting `content/blog/` or
+`public/blog/`.
 
 ## Structure
 
