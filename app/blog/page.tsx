@@ -3,6 +3,12 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getAllPosts, getCategories, formatDate } from "@/lib/posts";
 
+// Without this, Next's Data Cache holds the first getAllPosts() result
+// (fetched via lib/sanity/client.ts) indefinitely - a newly published post
+// in /studio would never appear until the next deploy. 60s keeps the page
+// fast while still catching up shortly after a publish.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Lark & Stern | Blog",
   description:

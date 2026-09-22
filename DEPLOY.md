@@ -94,9 +94,13 @@ Every future `git push` to `main` auto-deploys.
 ---
 
 ## Notes
-- The blog is fully migrated: all 19 posts live in `content/blog/` and render at
-  `/post/<slug>`, the same URLs Wix used. `vercel.json` also redirects `/blog/<slug>`
-  to `/post/<slug>` for any stray links.
+- The blog now reads from Sanity (see README.md "Blog" section), not local MDX
+  files. Add the Sanity integration under Vercel -> Project -> Integrations
+  before the first deploy that depends on it, so
+  `NEXT_PUBLIC_SANITY_PROJECT_ID`/`NEXT_PUBLIC_SANITY_DATASET` exist in
+  Production/Preview. Posts still render at `/post/<slug>`, the same URLs Wix
+  used. `vercel.json` also redirects `/blog/<slug>` to `/post/<slug>` for any
+  stray links.
 - `preview.html` and `team.html` are standalone design mirrors for local sign-off; they
   aren't served by Next and don't affect the build. `blog.html` predates the migration
   and no longer matches the real blog.

@@ -267,7 +267,12 @@ function renderBlock(node, media, depth = 0, demoteHeadings = false) {
       if (!src) return [];
       const caption = normalise(data.caption ?? "").trim();
       const alt = caption || data.altText || "";
-      return [`<Figure${attr("src", src)}${attr("alt", alt)}${attr("caption", caption)} />`];
+      // Wix positions most images as full-width blocks (alignment 0), but some
+      // are set to sit beside text instead - render those smaller and floated.
+      const wrap = (data.containerData?.alignment ?? 0) !== 0;
+      return [
+        `<Figure${attr("src", src)}${attr("alt", alt)}${attr("caption", caption)}${wrap ? " wrap" : ""} />`,
+      ];
     }
 
     case N.GALLERY: {

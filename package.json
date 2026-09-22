@@ -10,13 +10,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@portabletext/react": "^3.2.1",
+    "@sanity/client": "^6.24.1",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.63.0",
     "framer-motion": "^11.11.0",
     "gray-matter": "^4.0.3",
     "next": "^14.2.15",
-    "next-mdx-remote": "^6.0.0",
+    "next-sanity": "^9.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remark-gfm": "^4.0.1"
+    "sanity": "^3.63.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
