@@ -80,5 +80,49 @@ export const postComponents: PortableTextComponents = {
         </div>
       );
     },
+
+    // @sanity/table stores { rows: [{ _key, cells: string[] }] }. The first row
+    // is treated as the header, matching how the migrated Wix tables read.
+    table: ({ value }) => {
+      const rows: { _key?: string; cells?: string[] }[] = value?.rows ?? [];
+      if (!rows.length) return null;
+      const [head, ...body] = rows;
+      return (
+        // not-prose + overflow-x-auto so a wide table scrolls on mobile
+        // instead of forcing the whole page to scroll sideways.
+        <div className="not-prose my-8 overflow-x-auto rounded-2xl border border-line shadow-card">
+          <table className="w-full border-collapse text-sm">
+            {head ? (
+              <thead>
+                <tr>
+                  {(head.cells ?? []).map((cell, i) => (
+                    <th
+                      key={i}
+                      className="border-b border-line bg-paper px-4 py-2.5 text-left font-semibold text-navy"
+                    >
+                      {cell}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            ) : null}
+            <tbody>
+              {body.map((row, r) => (
+                <tr key={row._key ?? r} className="even:bg-paper/40">
+                  {(row.cells ?? []).map((cell, c) => (
+                    <td
+                      key={c}
+                      className="border-b border-line px-4 py-2.5 align-top text-ink"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    },
   },
 };

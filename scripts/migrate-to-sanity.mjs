@@ -37,11 +37,13 @@ const args = Object.fromEntries(
 
 const dataset = args.dataset ?? "development";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const token = process.env.SANITY_API_TOKEN;
+// The Vercel Sanity integration names this SANITY_API_WRITE_TOKEN; accept
+// either name so .env.local doesn't need a duplicate entry.
+const token = process.env.SANITY_API_TOKEN ?? process.env.SANITY_API_WRITE_TOKEN;
 
 if (!projectId || !token) {
   console.error(
-    "Missing NEXT_PUBLIC_SANITY_PROJECT_ID or SANITY_API_TOKEN in the environment - set both (see .env.local.example) before running this."
+    "Missing NEXT_PUBLIC_SANITY_PROJECT_ID or a write token (SANITY_API_TOKEN / SANITY_API_WRITE_TOKEN) in the environment."
   );
   process.exit(1);
 }
@@ -186,6 +188,18 @@ async function bodyToPortableText(mdxBody) {
 }
 
 async function migratePost(slug) {
+  // A post can already exist under a different _id (e.g. created by hand in
+  // Studio before this script ran) - skip it rather than risk overwriting
+  // real, possibly hand-refined content with the auto-converted version.
+  const existing = await client.fetch(
+    `*[_type == "post" && slug.current == $slug][0]._id`,
+    { slug }
+  );
+  if (existing) {
+    console.log(`  skip: ${slug} (already exists as ${existing})`);
+    return;
+  }
+
   const file = await readFile(join(CONTENT_DIR, slug, "index.mdx"), "utf8");
   const { data, content } = matter(file);
 

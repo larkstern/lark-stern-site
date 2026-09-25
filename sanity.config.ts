@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { table } from "@sanity/table";
 import { schemaTypes } from "./sanity/schemaTypes";
 
 // projectId/dataset are read from env so this file needs no changes once
@@ -16,5 +17,5 @@ export default defineConfig({
   projectId,
   dataset,
   schema: { types: schemaTypes },
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool(), visionTool(), table()],
 });
