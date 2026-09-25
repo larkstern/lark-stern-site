@@ -93,6 +93,11 @@ export default defineType({
             { name: "poster", type: "image", title: "Poster image" },
           ],
         },
+        {
+          // @sanity/table: grid editor in Studio. Rendered by the "table"
+          // renderer in components/PostMedia.tsx; the first row is the header.
+          type: "table",
+        },
       ],
     }),
   ],

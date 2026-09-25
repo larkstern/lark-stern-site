@@ -13,6 +13,7 @@
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^6.24.1",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/table": "^2.0.1",
     "@sanity/vision": "^3.63.0",
     "framer-motion": "^11.11.0",
     "gray-matter": "^4.0.3",
